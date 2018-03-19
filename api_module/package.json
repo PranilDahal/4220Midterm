@@ -1,0 +1,14 @@
+{
+  "name": "api_module",
+  "version": "1.0.0",
+  "description": "Custom module to interact with the web API.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Pranil, Karina, Ararat, Olin-mao",
+  "license": "MIT",
+  "dependencies": {
+    "superagent": "^3.8.2"
+  }
+}

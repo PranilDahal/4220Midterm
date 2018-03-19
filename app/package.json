@@ -1,0 +1,16 @@
+{
+  "name": "app",
+  "version": "1.0.0",
+  "description": "App and Cli to interact with the custom module.",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Pranil, Karina, Ararat, Olin-mao",
+  "license": "MIT",
+  "dependencies": {
+    "api_module": "file:../api_module",
+    "inquirer": "^5.1.0",
+    "yargs": "^11.0.0"
+  }
+}
