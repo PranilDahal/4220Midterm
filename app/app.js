@@ -29,7 +29,7 @@ const searchWithParams = (sq) => {
                     let selection = choice.ShowName.split("(")[1].slice(0, -1)
                     mod.fetch_by_id(selection)
                     .then(showObject => {
-                        Display(showObject)
+                        display(showObject)
                     })
 
                 })
@@ -42,7 +42,55 @@ const searchWithParams = (sq) => {
 
 }
 
-function Display(show){
+const singleSearch = (ss)=>{
+    mod.singleSearch(ss)
+    .then(res => {
+        display(res);
+    })
+    .catch(err => console.log(err))
+}
+
+const peopleSearch = (ps) => {
+    mod.peopleSearch(ps)
+    .then(res => {
+            let available = []
+            results.forEach(element => {
+                available.push(`${element.person.name} (${element.person.id})`)
+            });
+        })
+            inquirer.prompt([{
+                type: 'list',
+                message: 'Select an Actor to view their details: ',
+                name: 'ActorName',
+                choices: available
+
+            }])
+                .then(choice => {
+                    console.log(`\n${choice.ActorName}\n`)
+                    let selection = choice.ActorName.split("(")[1].slice(0, -1)
+                    mod.fetch_by_id(selection)
+                    .then(showObject => {
+                        displayActor(showObject)
+                    })
+                })
+                .catch(err => console.log(err))
+        .catch(err => console.log(err))
+}
+
+const showEpisodes = (id) =>{
+    mod.episodeSearch(id)
+    .then(res => {
+        res.forEach( (ep) => {
+            console.log(`Episode Name: ${ep.name}`)
+            console.log(`Season Number: ${ep.season}`)
+            console.log(`Number: ${ep.number}`)
+            console.log(`Length: ${ep.runtime}`)
+            console.log(`Summary: ${ep.summary}`)
+        })
+    })
+    .catch(err => console.log(err))
+}
+function display(show){
     console.log(`Name: ${show.name}`)
     console.log(`Show Type: ${show.type==null? 'Not Available' : show.type}`)
     console.log(`Channel Network: ${show.network==null ? 'Not Available' :show.network.name}`)
@@ -54,8 +102,21 @@ function Display(show){
     console.log(`Offical Site: ${show.officialSite==null ? 'Not Available' :show.officialSite}`)
     console.log(`Ratings: ${show.rating.average==null ? 'Not Available' : show.rating.average}`)
     console.log(`Summary of the plot: ${show.summary==null ? 'Not Available' :show.summary}`)
+
+    rl.question('Would you like to view show\'s episodes? [Y/N]', (answer) => {
+      if(answer.toLowerCase() === 'y'){
+         showSeasons(show.id)
+      }
+      rl.close();
+    });
+}
+function displayActor(actor){
+    console.log(`Name: ${actor.name}`)
+    console.log(`Gender: ${actor.gender}`)
+    console.log(`Birthday: ${actor.birthday}`)
+    console.log(`Deathday: ${actor.deathday}`)
 }
 
 module.exports = {
-    searchWithParams
+    searchWithParams,singleSearch,showEpisodes
 }
