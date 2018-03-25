@@ -38,18 +38,16 @@ const flags = yargs.usage('$0: Usage <cmd> [options]')
         },
         handler: (argv) => { app.peopleSearch(argv.ps) }
     })
-    /*
     .command({
-        command: 'people search',
-        desc: 'search for specific actors based on names',
+        command: 'episode search',
+        desc: 'search for specific episodes of a show',
         builder: (yargs) => {
-            return yargs.option('peopleSearch', {
-                alias: 'ps',
-                describe: 'Search for show title. Details of show will be given'
+            return yargs.option('episodeSearch', {
+                alias: 'es',
+                describe: 'Search for episodes of a specific show. Details of episode will be given'
             })
         },
-        handler: (argv) => { app.peopleSearch(argv.ps) }
+        handler: (argv) => { app.showEpisodes(argv.ps) }
     })
-    */
     .help()
     .argv
