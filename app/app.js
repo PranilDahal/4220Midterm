@@ -1,7 +1,13 @@
+
 const
     mod = require('api_module'),
-    inquirer = require('inquirer')
+    inquirer = require('inquirer'),
+    readline = require('readline')
 
+const rl = readline.createInterface({
+    input: process.stdin,
+    output: process.stdout
+});
 const searchWithParams = (sq) => {
 
     mod.search(sq)
@@ -45,19 +51,18 @@ const searchWithParams = (sq) => {
 const singleSearch = (ss)=>{
     mod.singleSearch(ss)
     .then(res => {
-        display(res);
+        Display(res);
     })
     .catch(err => console.log(err))
 }
 
 const peopleSearch = (ps) => {
     mod.peopleSearch(ps)
-    .then(res => {
+    .then(results => {
             let available = []
             results.forEach(element => {
                 available.push(`${element.person.name} (${element.person.id})`)
             });
-        })
             inquirer.prompt([{
                 type: 'list',
                 message: 'Select an Actor to view their details: ',
@@ -68,18 +73,20 @@ const peopleSearch = (ps) => {
                 .then(choice => {
                     console.log(`\n${choice.ActorName}\n`)
                     let selection = choice.ActorName.split("(")[1].slice(0, -1)
-                    mod.fetch_by_id(selection)
+                    mod.fetch_person(selection)
                     .then(showObject => {
                         displayActor(showObject)
                     })
                 })
                 .catch(err => console.log(err))
+        })
         .catch(err => console.log(err))
 }
 
 const showEpisodes = (id) =>{
     mod.episodeSearch(id)
     .then(res => {
+
         res.forEach( (ep) => {
             console.log(`Episode Name: ${ep.name}`)
             console.log(`Season Number: ${ep.season}`)
@@ -105,7 +112,7 @@ function Display(show){
 
     rl.question('Would you like to view show\'s episodes? [Y/N]', (answer) => {
       if(answer.toLowerCase() === 'y'){
-         showSeasons(show.id)
+         showEpisodes(show.id)
       }
       rl.close();
     });
@@ -118,5 +125,5 @@ function displayActor(actor){
 }
 
 module.exports = {
-    searchWithParams,singleSearch,showEpisodes
+    searchWithParams,singleSearch,showEpisodes,peopleSearch
 }

@@ -14,17 +14,21 @@ exports.search = (sq) => {
     return _fetch(param)
 }
 exports.singleSearch = (ss) => {
-    param = `singlesearch/shows?q=${sq}`
+    param = `singlesearch/shows?q=${ss}`
+    console.log(param)
     return _fetch(param)
 }
 exports.peopleSearch = (ps) =>{
-    param = `people/${ps}`
+    param = `/search/people?q=${ps}`
     return _fetch(param)
 }
 exports.episodeSearch = (id) => {
-    param = `/shows/${id}/episodes`
+    param = `shows/${id}/episodes`
     return _fetch(param)
 }
 exports.fetch_by_id = (id) => {
     return _fetch(`shows/${id}`)
+}
+exports.fetch_person = (id) => {
+    return _fetch(`people/${id}`)
 }

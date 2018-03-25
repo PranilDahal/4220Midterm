@@ -17,7 +17,7 @@ const flags = yargs.usage('$0: Usage <cmd> [options]')
         handler: (argv) => { app.searchWithParams(argv.sq) }
     })
     .command({
-        command: 'single search',
+        command: 'singleSearch',
         desc: 'As opposed to the regular search endpoint, the singlesearch endpoint allows embedding additional information in the result.',
         builder: (yargs) => {
             return yargs.option('singleSearch', {
@@ -28,7 +28,7 @@ const flags = yargs.usage('$0: Usage <cmd> [options]')
         handler: (argv) => { app.singleSearch(argv.ss) }
     })
     .command({
-        command: 'people search',
+        command: 'peopleSearch',
         desc: 'search for specific actors based on names',
         builder: (yargs) => {
             return yargs.option('peopleSearch', {
@@ -39,7 +39,7 @@ const flags = yargs.usage('$0: Usage <cmd> [options]')
         handler: (argv) => { app.peopleSearch(argv.ps) }
     })
     .command({
-        command: 'episode search',
+        command: 'episodeSearch',
         desc: 'search for specific episodes of a show',
         builder: (yargs) => {
             return yargs.option('episodeSearch', {
