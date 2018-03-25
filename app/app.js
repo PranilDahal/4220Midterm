@@ -29,7 +29,7 @@ const searchWithParams = (sq) => {
                     let selection = choice.ShowName.split("(")[1].slice(0, -1)
                     mod.fetch_by_id(selection)
                     .then(showObject => {
-                        display(showObject)
+                        Display(showObject)
                     })
 
                 })
@@ -77,10 +77,20 @@ const peopleSearch = (ps) => {
         .catch(err => console.log(err))
 }
 
-const showSchedule = (id) =>{
-
+const showEpisodes = (id) =>{
+    mod.episodeSearch(id)
+    .then(res => {
+        res.forEach( (ep) => {
+            console.log(`Episode Name: ${ep.name}`)
+            console.log(`Season Number: ${ep.season}`)
+            console.log(`Number: ${ep.number}`)
+            console.log(`Length: ${ep.runtime}`)
+            console.log(`Summary: ${ep.summary}`)
+        })
+    })
+    .catch(err => console.log(err))
 }
-function display(show){
+function Display(show){
     console.log(`Name: ${show.name}`)
     console.log(`Show Type: ${show.type==null? 'Not Available' : show.type}`)
     console.log(`Channel Network: ${show.network==null ? 'Not Available' :show.network.name}`)
@@ -93,9 +103,9 @@ function display(show){
     console.log(`Ratings: ${show.rating.average==null ? 'Not Available' : show.rating.average}`)
     console.log(`Summary of the plot: ${show.summary==null ? 'Not Available' :show.summary}`)
 
-    rl.question('Would you like to view show schedule? [Y/N]', (answer) => {
+    rl.question('Would you like to view show\'s episodes? [Y/N]', (answer) => {
       if(answer.toLowerCase() === 'y'){
-         showSchedule(show.id)
+         showSeasons(show.id)
       }
       rl.close();
     });
@@ -108,5 +118,5 @@ function displayActor(actor){
 }
 
 module.exports = {
-    searchWithParams,singleSearch
+    searchWithParams,singleSearch,showEpisodes
 }
